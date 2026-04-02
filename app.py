@@ -3,7 +3,7 @@ os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 import tensorflow as tf
 tf.config.set_visible_devices([], 'GPU')
 from flask import Flask, render_template, request
-import tensorflow as tf
+from tensorflow.keras.models import load_model
 import numpy as np
 import cv2
 import os
@@ -14,7 +14,7 @@ app = Flask(__name__)
 # Load Model
 # -----------------------------
 print("Loading model...")
-model = tf.keras.models.load_model("tomato_disease_model.h5")
+model = load_model("tomato_disease_model.h5")
 print("Model loaded successfully!")
 
 # -----------------------------
@@ -83,8 +83,8 @@ def predict_disease(filepath):
         img = np.expand_dims(img, axis=0)
 
         print("Running prediction...")
-        prediction = model.predict(img)
-
+        prediction = model(img)
+        
         pred = prediction[0][0]
 
         healthy_prob = (pred * 0.9 + 0.05) * 100
