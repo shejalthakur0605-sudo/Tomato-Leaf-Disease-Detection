@@ -1,3 +1,7 @@
+import os
+os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
+import tensorflow as tf
+tf.config.set_visible_devices([], 'GPU')
 from flask import Flask, render_template, request
 import tensorflow as tf
 import numpy as np
@@ -206,7 +210,7 @@ def predict_disease(filepath):
         img = img / 255.0
         img = np.expand_dims(img, axis=0)
 
-        prediction = model.predict(img)[0][0]
+        prediction = model(img, training=False).numpy()
 
         healthy_prob = (prediction * 0.9 + 0.05) * 100
         blight_prob = ((1 - prediction) * 0.9 + 0.05) * 100
