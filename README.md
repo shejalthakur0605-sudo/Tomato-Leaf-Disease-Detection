@@ -67,7 +67,7 @@ python train.py
 python app.py
 
 # 4 Open in Browser
-http://127.0.0.1:5000/
+https://huggingface.co/spaces/ShejalThakur/tomato-disease-detector 
 
 Upload a tomato leaf image to detect disease.
 
